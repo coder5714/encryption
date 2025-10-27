@@ -2,7 +2,7 @@
 <html lang="en" class="serif">
 <head>
   <title>Encrypter & Decrypter</title>
-  <script>
+  <script defer async>
     customElements.define("meta-data",data);
 class data extends HTMLElement{
     constructor(){
@@ -15,7 +15,7 @@ class data extends HTMLElement{
     }
 }
   </script>
-  <script>
+  <script defer async> 
     class CSS extends HTMLElement{
     constructor(){
         this.innerHTML = `
@@ -97,6 +97,12 @@ font settings
   <css>
 
   </css>
+  <script src="create_element.js" defer async>
+  </script>
+  <script src="PHP.js" defer async>
+  </script>
+  <script src="enc.js" defer async>
+  </script>
 </head>
 <body>
   <h1>Encrypter &amp; Decrypter</h1>
@@ -266,4 +272,5 @@ This project is open source and free to use under the MIT License.
       </script>
 
 </body>
+
 </html>
