@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" class="serif">
+<head>
+  <title>Encrypter & Decrypter</title>
+  <script>
+    customElements.define("meta-data",data);
+class data extends HTMLElement{
+    constructor(){
+        this.innerHTML = `
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <meta name="description" content="Secure AES-GCM encryption tool">
+        <meta name="keywords" content="encryptor,encrypter,decrypter,decryptor,encryption,decryption">
+        `
+    }
+}
+  </script>
+  <script>
+    class CSS extends HTMLElement{
+    constructor(){
+        this.innerHTML = `
+    <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      font-family: Arial, sans-serif;
+      color: #e0e0e0;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: rgb(2, 255, 48);
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 80%;
+      min-height: 100px;
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      border: 1px solid #444;
+      border-radius: 5px;
+      padding: 12px;
+      font-size: 16px;
+      resize: vertical;
+    }
+
+    textarea[readonly] {
+      background-color: #2e2e2e;
+    }
+
+    .button-group {
+      margin: 20px 0;
+    }
+
+    button {
+      margin: 8px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #6200ea;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #3700b3;
+    }
+
+    .output p {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .download-readme {
+      margin-top: 40px;
+    }
+  </style>
+        `
+    }
+}
+customElements.define('css',CSS)
+  </script>
+  <meta-data></meta-data>
+  <style>
+    /*
+font settings
+*/
+.serif,#serif{font-family: 'Times New Roman', Times, serif;}
+.error,#error{ font:normal monospace; color:red;}
+  </style>
+  <css>
+
+  </css>
+</head>
+<body>
+  <h1>Encrypter &amp; Decrypter</h1>
+<div class="sans-serif"> 
+  <textarea id="input" placeholder="Type text to encrypt, or paste Base64 to decrypt"></textarea>
+    <button onclick="encrypt()">Encrypt</button>
+    <button onclick="decrypt()">Decrypt</button>
+    <button onclick="copyToClipboard()">Copy Output</button>
+    <button onclick="download()">Download Output</button>
+    <button onclick="downloadReadme()">Download README.md</button>
+  </div>
+  <div class="output">
+    <p id="status">Decrypted:</p>
+    <textarea id="output" readonly></textarea>
+  </div>
+
+  <!-- Optional background music -->
+  <audio autoplay loop>
+    <source src="coder4262.github.io/encryptor/enc.mp3" type="audio/mpeg">
+  </audio>
+  <a download="https://cipher-craft-49f80da8.base44.app/">
+    download link
+  </a>
+  <script>
+    try{
+    function encrypt() {
+      const input = document.getElementById('input').value;
+      if (!input.trim()) {
+        alert("Please enter some text to encrypt.");
+        return;
+      }
+      const encoded = btoa(unescape(encodeURIComponent(input)));
+      document.getElementById('output').value = encoded;
+      document.getElementById('status').innerText = 'Encrypted:';
+    }
+
+    function decrypt() {
+      const input = document.getElementById('input').value;
+      if (!input.trim()) {
+        alert("Please enter a Base64 string to decrypt.");
+        return;
+      }
+      try {
+        const decoded = decodeURIComponent(escape(atob(input)));
+        document.getElementById('output').value = decoded;
+        document.getElementById('status').innerText = 'Decrypted:';
+      } catch (e) {
+        alert("Invalid Base64 input.");
+      }
+    }
+
+    function copyToClipboard() {
+      const output = document.getElementById('output');
+      output.select();
+      document.execCommand('copy');
+      alert("Output copied to clipboard.");
+    }
+
+    function download() {
+      const content = document.getElementById('output').value;
+      const blob = new Blob([content], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'output.txt';
+      link.click();
+    }
+
+    function downloadReadme() {
+    try{
+      const readmeContent = `
+# Encrypter
+
+This is a **Base64 Encrypter & Decrypter** built with simple HTML, CSS, and JavaScript.
+
+## 🔐 Features
+
+- Encrypt plain text into Base64 format.
+- Decrypt Base64 text back into readable format.
+- Copy the result to clipboard.
+- Download the encrypted/decrypted output.
+- Optional background music (if \`enc.mp3\` is present).
+
+---
+
+## 📄 Live Demo
+
+👉 [Open Encrypter](encrypter.html)
+
+---
+
+## 💻 Usage
+
+1. **Encrypting:**
+   - Type or paste your text into the input box.
+   - Click **Encrypt**.
+   - The output will be shown below.
+
+2. **Decrypting:**
+   - Paste a Base64 encoded string into the input box.
+   - Click **Decrypt**.
+   - The decoded message will appear in the output box.
+
+3. **Extras:**
+   - Click **Copy Output** to copy the result to clipboard.
+   - Click **Download Output** to download it as a \`.txt\` file.
+
+---
+
+## 🎵 Background Music (Optional)
+
+If you'd like background music to play while using the app:
+
+1. Clone this repository:
+   \`\`\`bash
+   git clone https://github.com/your-username/encrypter.git
+   cd encrypter
+   \`\`\`
+
+2. Download the \`enc.mp3\` file from [this link](https://github.com/user-attachments/files/22491442/enc.mp3).
+
+3. Place the file in the project root directory as \`enc.mp3\`.
+
+> ⚠️ Make sure the file is named exactly \`enc.mp3\`.
+
+---
+
+## 📁 Files
+
+| File         | Description                      |
+|--------------|----------------------------------|
+| \`encrypter.html\` | Main web interface             |
+| \`enc.js\`         | JavaScript logic (inlined)    |
+| \`enc.mp3\`        | *(Optional)* Background music  |
+
+---
+
+## ⚠️ Notes
+
+- This project uses **Base64 encoding**, which is **not secure for sensitive data**.
+- The \`bin()\` and \`unbin()\` functions are **not used** in this code.
+
+---
+
+## 🧠 Tech Stack
+
+- **HTML5**
+- **CSS3**
+- **JavaScript (Vanilla)**
+
+---
+
+## 📄 License
+
+This project is open source and free to use under the MIT License.
+      `.trim();
+
+      const blob = new Blob([readmeContent], { type: 'text/markdown' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'README.md';
+      link.click();
+    }catch(e){}}}catch(e){
+      document.body.innerHTML = `
+      ${e}
+      `
+    }
+      </script>
+
+</body>
+</html>

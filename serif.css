@@ -1,0 +1,5 @@
+/*
+font settings
+*/
+.serif,#serif{font-family: 'Times New Roman', Times, serif;}
+.error,#error{ font:normal monospace; color:red;}
